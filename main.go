@@ -25,6 +25,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/urfave/cli"
 	"log"
 	"net/http"
@@ -58,9 +59,22 @@ func main() {
 			os.Exit(1)
 		}
 
+		// Decode the returned JSON into a struct
 		defer req.Body.Close()
 		ipInfo := IpInfo{}
 		json.NewDecoder(req.Body).Decode(&ipInfo)
+
+		// Display the result
+		fmt.Println(
+			"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
+			"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
+			"\n          City  ", color.HiCyanString(ipInfo.City),
+			"\n        Region  ", color.HiCyanString(ipInfo.Region),
+			"\n       Country  ", color.HiCyanString(ipInfo.Country),
+			"\n      Location  ", color.HiCyanString(ipInfo.Loc),
+			"\n   Postal code  ", color.HiCyanString(ipInfo.Postal),
+			"\n  Organization  ", color.HiCyanString(ipInfo.Org),
+		)
 
 		return nil
 	}
