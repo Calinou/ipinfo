@@ -33,14 +33,15 @@ import (
 )
 
 type IpInfo struct {
-	Ip       string `json:"ip"`       // IP address
-	Hostname string `json:"hostname"` // Hostname
-	City     string `json:"city"`     // City
-	Region   string `json:"region"`   // Region
-	Country  string `json:"country"`  // Country
-	Loc      string `json:"loc"`      // Location ("latitude,longitude" in degrees)
-	Postal   string `json:"postal"`   // Postal code
-	Org      string `json:"org"`      // Organization
+	Ip       string            `json:"ip"`       // IP address
+	Hostname string            `json:"hostname"` // Hostname
+	City     string            `json:"city"`     // City
+	Region   string            `json:"region"`   // Region
+	Country  string            `json:"country"`  // Country
+	Loc      string            `json:"loc"`      // Location ("latitude,longitude" in degrees)
+	Postal   string            `json:"postal"`   // Postal code
+	Org      string            `json:"org"`      // Organization
+	Error    map[string]string `json:"error"`    // Error (if any)
 }
 
 func main() {
@@ -51,11 +52,31 @@ func main() {
 	app.UsageText = app.Name + " [IP address]"
 
 	app.Action = func(c *cli.Context) error {
+		numArgs := len(c.Args())
+
+		var url string
+
+		if numArgs == 0 {
+			// Use the user's IP address (determined by ipinfo.io)
+			url = "https://ipinfo.io/json"
+		} else if numArgs == 1 {
+			// Use the IP address provided on the command line
+			url = "https://ipinfo.io/" + c.Args().Get(0) + "/json"
+		} else {
+			// Invalid number of arguments supplied
+			fmt.Printf(
+				color.HiRedString("Error:")+
+					" Not enough arguments supplied; expected 0 or 1 arguments (got %d).\n"+
+					"Usage: "+app.UsageText+"\n",
+				numArgs)
+			os.Exit(1)
+		}
+
 		client := &http.Client{}
-		req, err := client.Get("http://ipinfo.io/json")
+		req, err := client.Get(url)
 
 		if err != nil {
-			fmt.Println("Error: Requesting IP address information failed.")
+			fmt.Println(color.HiRedString("Error:"), "Requesting IP address information failed.")
 			os.Exit(1)
 		}
 
@@ -64,17 +85,29 @@ func main() {
 		ipInfo := IpInfo{}
 		json.NewDecoder(req.Body).Decode(&ipInfo)
 
-		// Display the result
-		fmt.Println(
-			"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
-			"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
-			"\n          City  ", color.HiCyanString(ipInfo.City),
-			"\n        Region  ", color.HiCyanString(ipInfo.Region),
-			"\n       Country  ", color.HiCyanString(ipInfo.Country),
-			"\n      Location  ", color.HiCyanString(ipInfo.Loc),
-			"\n   Postal code  ", color.HiCyanString(ipInfo.Postal),
-			"\n  Organization  ", color.HiCyanString(ipInfo.Org),
-		)
+		if len(ipInfo.Error) == 0 {
+			// Success; display the result
+			fmt.Println(
+				"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
+				"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
+				"\n          City  ", color.HiCyanString(ipInfo.City),
+				"\n        Region  ", color.HiCyanString(ipInfo.Region),
+				"\n       Country  ", color.HiCyanString(ipInfo.Country),
+				"\n      Location  ", color.HiCyanString(ipInfo.Loc),
+				"\n   Postal code  ", color.HiCyanString(ipInfo.Postal),
+				"\n  Organization  ", color.HiCyanString(ipInfo.Org),
+			)
+		} else {
+			// ipinfo.io returned an error
+			fmt.Println(
+				color.HiRedString("Error:"),
+				"Invalid response from ipinfo.io:",
+				ipInfo.Error["title"],
+				"-",
+				ipInfo.Error["message"],
+			)
+			os.Exit(1)
+		}
 
 		return nil
 	}
