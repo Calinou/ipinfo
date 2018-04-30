@@ -47,7 +47,7 @@ type IpInfo struct {
 func main() {
 	app := cli.NewApp()
 	app.Name = "ipinfo"
-	app.Version = "0.0.1"
+	app.Version = "0.1.0"
 	app.Usage = "Retrieve information about IP addresses"
 	app.UsageText = app.Name + " [IP address]"
 
