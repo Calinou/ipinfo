@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Colored output on Windows now works as expected.
+
 ## 0.1.0 - 2018-04-30
 
 - Initial versioned release.

@@ -64,7 +64,8 @@ func main() {
 			url = "https://ipinfo.io/" + c.Args().Get(0) + "/json"
 		} else {
 			// Invalid number of arguments supplied
-			fmt.Printf(
+			fmt.Fprintf(
+				color.Output,
 				color.HiRedString("Error:")+
 					" Not enough arguments supplied; expected 0 or 1 arguments (got %d).\n"+
 					"Usage: "+app.UsageText+"\n",
@@ -76,7 +77,11 @@ func main() {
 		req, err := client.Get(url)
 
 		if err != nil {
-			fmt.Println(color.HiRedString("Error:"), "Requesting IP address information failed.")
+			fmt.Fprintln(
+				color.Output,
+				color.HiRedString("Error:"),
+				"Requesting IP address information failed.",
+			)
 			os.Exit(1)
 		}
 
@@ -87,7 +92,8 @@ func main() {
 
 		if len(ipInfo.Error) == 0 {
 			// Success; display the result
-			fmt.Println(
+			fmt.Fprintln(
+				color.Output,
 				"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
 				"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
 				"\n          City  ", color.HiCyanString(ipInfo.City),
@@ -99,7 +105,8 @@ func main() {
 			)
 		} else {
 			// ipinfo.io returned an error
-			fmt.Println(
+			fmt.Fprintln(
+				color.Output,
 				color.HiRedString("Error:"),
 				"Invalid response from ipinfo.io:",
 				ipInfo.Error["title"],
