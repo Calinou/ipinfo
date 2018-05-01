@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.1] - 2018-05-01
+
 ### Fixed
 
 - Colored output on Windows now works as expected.
@@ -15,4 +17,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial versioned release.
 
-[Unreleased]: https://github.com/Calinou/ipinfo/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Calinou/ipinfo/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Calinou/ipinfo/compare/v0.1.0...v0.1.1
