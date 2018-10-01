@@ -10,7 +10,7 @@ the country and Internet service provider).
 
 #### Looking up your current IP address
 
-```
+```text
 $ ipinfo
 
     IP address   ... # Results will be based on your IP address
@@ -25,22 +25,22 @@ $ ipinfo
 
 #### Looking up an arbitrary IP address
 
-```
+```text
 $ ipinfo 8.8.8.8
 
-    IP address   8.8.8.8 
-      Hostname   google-public-dns-a.google.com 
-          City   Mountain View 
-        Region   California 
-       Country   US 
-      Location   37.3860,-122.0840 
-   Postal code   94035 
+    IP address   8.8.8.8
+      Hostname   google-public-dns-a.google.com
+          City   Mountain View
+        Region   California
+       Country   US
+      Location   37.3860,-122.0840
+   Postal code   94035
   Organization   AS15169 Google LLC
 ```
 
 ### Reference
 
-```
+```text
 NAME:
    ipinfo - Retrieve information about IP addresses
 
