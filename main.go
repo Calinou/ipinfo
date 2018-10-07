@@ -25,11 +25,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/urfave/cli"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/fatih/color"
+	"github.com/urfave/cli"
 )
 
 type IpInfo struct {
@@ -94,14 +95,14 @@ func main() {
 			// Success; display the result
 			fmt.Fprintln(
 				color.Output,
-				"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
-				"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
-				"\n          City  ", color.HiCyanString(ipInfo.City),
-				"\n        Region  ", color.HiCyanString(ipInfo.Region),
-				"\n       Country  ", color.HiCyanString(ipInfo.Country),
-				"\n      Location  ", color.HiCyanString(ipInfo.Loc),
-				"\n   Postal code  ", color.HiCyanString(ipInfo.Postal),
-				"\n  Organization  ", color.HiCyanString(ipInfo.Org),
+				"\n    IP address:", color.HiCyanString(ipInfo.Ip),
+				"\n      Hostname:", color.HiCyanString(ipInfo.Hostname),
+				"\n          City:", color.HiCyanString(ipInfo.City),
+				"\n        Region:", color.HiCyanString(ipInfo.Region),
+				"\n       Country:", color.HiCyanString(ipInfo.Country),
+				"\n      Location:", color.HiCyanString(ipInfo.Loc),
+				"\n   Postal code:", color.HiCyanString(ipInfo.Postal),
+				"\n  Organization:", color.HiCyanString(ipInfo.Org),
 			)
 		} else {
 			// ipinfo.io returned an error
