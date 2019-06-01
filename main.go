@@ -1,6 +1,6 @@
 // ipinfo: Retrieve information about IP addresses
 //
-// Copyright © 2018 Hugo Locurcio and contributors
+// Copyright © 2018-2019 Hugo Locurcio and contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
