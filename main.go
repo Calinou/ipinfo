@@ -25,15 +25,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/urfave/cli"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/fatih/color"
+	"github.com/urfave/cli"
 )
 
-type IpInfo struct {
-	Ip       string            `json:"ip"`       // IP address
+type IPInfo struct {
+	IP       string            `json:"ip"`       // IP address
 	Hostname string            `json:"hostname"` // Hostname
 	City     string            `json:"city"`     // City
 	Region   string            `json:"region"`   // Region
@@ -87,14 +88,23 @@ func main() {
 
 		// Decode the returned JSON into a struct
 		defer req.Body.Close()
-		ipInfo := IpInfo{}
-		json.NewDecoder(req.Body).Decode(&ipInfo)
+		ipInfo := IPInfo{}
+		err = json.NewDecoder(req.Body).Decode(&ipInfo)
+
+		if err != nil {
+			fmt.Fprintln(
+				color.Output,
+				color.HiRedString("Error:"),
+				"Could not decode the JSON response returned by ipinfo.io.",
+			)
+			os.Exit(1)
+		}
 
 		if len(ipInfo.Error) == 0 {
 			// Success; display the result
 			fmt.Fprintln(
 				color.Output,
-				"\n    IP address  ", color.HiCyanString(ipInfo.Ip),
+				"\n    IP address  ", color.HiCyanString(ipInfo.IP),
 				"\n      Hostname  ", color.HiCyanString(ipInfo.Hostname),
 				"\n          City  ", color.HiCyanString(ipInfo.City),
 				"\n        Region  ", color.HiCyanString(ipInfo.Region),
