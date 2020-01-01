@@ -68,7 +68,7 @@ func main() {
 			fmt.Fprintf(
 				color.Output,
 				color.HiRedString("Error:")+
-					" Not enough arguments supplied; expected 0 or 1 arguments (got %d).\n"+
+					" Too many arguments supplied (expected 0 or 1 arguments, got %d).\n"+
 					"Usage: "+app.UsageText+"\n",
 				numArgs)
 			os.Exit(1)
@@ -95,7 +95,7 @@ func main() {
 			fmt.Fprintln(
 				color.Output,
 				color.HiRedString("Error:"),
-				"Could not decode the JSON response returned by ipinfo.io.",
+				"Couldn't decode the JSON response returned by ipinfo.io.",
 			)
 			os.Exit(1)
 		}
